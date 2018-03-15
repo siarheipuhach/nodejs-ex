@@ -63,7 +63,12 @@ router.post('/login',
   function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.send('you were logged in');
+    res.send('You were logged IN');
   });
+
+router.get('/logout', function(req, res){
+    req.logout()
+    res.send('You were logged OUT')
+});
 
 module.exports = router;

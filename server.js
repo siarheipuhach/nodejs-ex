@@ -14,10 +14,7 @@ var express = require('express'),
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var mongoURL = 'mongodb://localhost:27017/financer';
    
-mongoose.connect(mongoURL);
-var db = mongoose.connection;
 
 var app = express();
 
@@ -62,7 +59,7 @@ app.use('/', routes);
 app.use('/users', users)
 
 // Set port
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080));
 app.listen(app.get('port'), function(){
     console.log('Server is running on port '+ app.get('port'));
 });
