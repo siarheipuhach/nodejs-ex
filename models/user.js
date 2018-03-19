@@ -7,7 +7,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 
-mongoose.connect(mongoURL || 'mongodb://admin:admin@ds119059.mlab.com:19059/financer');
+mongoose.connect('mongodb://admin:admin@ds119059.mlab.com:19059/financer');
 
 var db = mongoose.connection;
 
