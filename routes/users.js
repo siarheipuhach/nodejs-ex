@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
   });
 
 passport.use(new LocalStrategy(
-    {usernameField: "email", passwordField:"password"},
+    {usernameField: "email", passwordField: "password"},
     function(email, password, done) {
         User.getUserByEmail(email, function(err, user){
             if(err) throw err;
