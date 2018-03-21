@@ -14,6 +14,7 @@ var express = require('express'),
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var items = require('./routes/items');
    
 
 var app = express();
@@ -57,6 +58,7 @@ app.use(function(req, res, next){
 
 app.use('/', routes);
 app.use('/users', users)
+app.use('/items', items)
 
 // Set port
 app.set('port', (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080));
