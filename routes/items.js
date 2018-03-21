@@ -34,8 +34,10 @@ router.post('/add', (req, res) => {
 
 router.get('/list', function(req, res){
     const user = req.user;
-    const items = Item.find().where({user: user});
-    res.send({'items': items})
+    const items = Item.find().where({user: user}).exec(
+        res.send({'items': items})
+    );
+    
 });
 
 router.post('/remove/:id', function(req, res){
