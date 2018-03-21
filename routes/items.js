@@ -15,7 +15,7 @@ router.post('/add', (req, res) => {
     console.log(user, value, type, name, year, month);    
     if (value && type && name && user && year && month){
         console.log("HEREREREREREERER")
-        var newItem = new User({
+        var newItem = new Item({
             value: value,
             type: type,
             name: name,
