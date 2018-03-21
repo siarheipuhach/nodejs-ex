@@ -12,8 +12,9 @@ router.post('/add', (req, res) => {
     var year = req.body.year;
     var month = req.body.month;
     var user = req.user;
-    console.log(req);    
+    console.log(user, value, type, name, year, month);    
     if (value && type && name && user && year && month){
+        console.log("HEREREREREREERER")
         var newItem = new User({
             value: value,
             type: type,
@@ -22,7 +23,6 @@ router.post('/add', (req, res) => {
             year: year,
             month: month
         });
-        console.log("HEREREREREREERER")
         Item.createItem(newItem, function(err, item){
             if(err) throw err;
             console.log(item);
