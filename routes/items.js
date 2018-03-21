@@ -34,8 +34,10 @@ router.post('/add', (req, res) => {
 
 router.get('/list', function(req, res){
     const user = req.user;
-    const items = Item.find().where({user: user}).exec(
+    const items = Item.find().where({user: user}).exec(function(err, items){
+        if (err) throw err;
         res.send({'items': items})
+    }
     );
     
 });
