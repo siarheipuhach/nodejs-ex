@@ -24,8 +24,9 @@ router.post('/add', (req, res) => {
             month: month
         });
         Item.createItem(newItem, function(err, item){
-            if(err) throw err;
-            console.log(item);
+            console.log('Errors:')
+            console.log(err)
+            console.log('err')
             return res.send({'Success': 'You have created a new item'})
         });
     }
@@ -34,8 +35,8 @@ router.post('/add', (req, res) => {
 
 
 router.get('/list', function(req, res){
-    const user = req.user;
-    const items = Item.find().where({user: user}).exec(function(err, items){
+    const user_id = req.user;
+    const items = Item.find().where({user: user_id}).exec(function(err, items){
         if (err) throw err;
         res.send({'items': items})
     }
