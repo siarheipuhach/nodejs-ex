@@ -6,9 +6,9 @@ var Item = require('../models/item');
 
 
 router.post('/add', (req, res) => {
-    var value = req.body.name;
-    var type = req.body.email;
-    var name = req.body.password;   
+    var value = req.body.value;
+    var type = req.body.type;
+    var name = req.body.name;   
     var year = req.body.year;
     var month = req.body.month;
     var user = req.user;
