@@ -27,7 +27,7 @@ var ItemSchema = mongoose.Schema({
         type: Number
     },
     user: {
-        type: Schema.Types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }
 
 });
