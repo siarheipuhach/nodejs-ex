@@ -12,7 +12,7 @@ router.post('/add', (req, res) => {
     var year = req.body.year;
     var month = req.body.month;
     var user = req.user;
-    
+    console.log(req);    
     if (value && type && name && user && year && month){
         var newItem = new User({
             value: value,
