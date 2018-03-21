@@ -22,11 +22,12 @@ router.post('/add', (req, res) => {
             year: year,
             month: month
         });
-        Item.createItem(newItem, function(err, user){
+        console.log("HEREREREREREERER")
+        Item.createItem(newItem, function(err, item){
             if(err) throw err;
-            console.log(user);
+            console.log(item);
+            return res.send({'Success': 'You have created a new item'})
         });
-        return res.send({'Success': 'You have created a new item'})
     }
     return res.send('Error')
   });
