@@ -74,7 +74,7 @@ router.get('/logout', function(req, res){
 router.get('/isloggedin', function(req, res){
     if(!req.user){
         res.statusCode = 403;
-        res.send('You are logged in')
+        res.send({'Error': 'You are not logged in user'})
     }
     else{
         res.statusCode = 200;
