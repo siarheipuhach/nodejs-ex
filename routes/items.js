@@ -37,6 +37,7 @@ router.post('/add', (req, res) => {
 router.get('/list', function(req, res){
     const user_id = req.user;
     if (!req.user) {
+      res.statusCode = 403;
       return res.send({'Error': 'You are not logged in user'})
     }
     const items = Item.find().where({user: user_id}).exec(function(err, items){
@@ -51,6 +52,7 @@ router.post('/remove/:id', function(req, res){
     const id = req.params.id;
     const user = req.user;
     Item.remove().where({_id: id}).exec(function(err, item){
+      if(err) throw err;
       res.send({'Success': 'Item was deleted successfully'})
     }
     );
