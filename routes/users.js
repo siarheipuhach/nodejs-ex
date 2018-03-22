@@ -71,4 +71,15 @@ router.get('/logout', function(req, res){
     res.send('You were logged OUT')
 });
 
+router.get('/isloggedin', function(req, res){
+    if(!req.user){
+        res.statusCode = 403;
+        res.send('You are logged in')
+    }
+    else{
+        res.statusCode = 200;
+        res.send({'message': 'you are logged in user'})
+    }
+});
+
 module.exports = router;
