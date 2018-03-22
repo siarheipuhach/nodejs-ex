@@ -36,9 +36,12 @@ router.post('/add', (req, res) => {
 
 router.get('/list', function(req, res){
     const user_id = req.user;
+    if (!req.user) {
+      return res.send({'Error': 'You are not logged in user'})
+    }
     const items = Item.find().where({user: user_id}).exec(function(err, items){
         if (err) throw err;
-        res.send({'items': items})
+        return res.send({'items': items})
     }
     );
     
@@ -47,8 +50,10 @@ router.get('/list', function(req, res){
 router.post('/remove/:id', function(req, res){
     const id = req.params.id;
     const user = req.user;
-    const items = Item.remove().where({_id: id});
-    res.send({'items': items})
+    Item.remove().where({_id: id}).exec(function(err, item){
+      res.send({'Success': 'Item was deleted successfully'})
+    }
+    );
 });
 
 router.put('/:id', (req, res) => {
