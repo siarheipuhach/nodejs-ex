@@ -59,7 +59,7 @@ router.post('/remove/:id', function(req, res){
 });
 
 router.put('/:id', (req, res) => {
-    Item.findOne({_id:req.params.id}, (err, foundObject) => {
+    Item.findById(req.params.id, (err, foundObject) => {
       var value = req.body.name;
       var type = req.body.email;
       var name = req.body.password;
