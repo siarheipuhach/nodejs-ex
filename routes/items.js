@@ -60,9 +60,9 @@ router.post('/remove/:id', function(req, res){
 
 router.put('/:id', (req, res) => {
     Item.findById(req.params.id, (err, foundObject) => {
-      var value = req.body.name;
-      var type = req.body.email;
-      var name = req.body.password;
+      var value = req.body.value;
+      var type = req.body.type;
+      var name = req.body.name;
       if(value !== undefined) {
         foundObject.value = value
       }
