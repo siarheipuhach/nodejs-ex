@@ -48,6 +48,22 @@ router.get('/list', function(req, res){
     
 });
 
+router.get('/list/:year/:month', function(req, res){
+  const month = req.param.month;
+  const year = req.param.year
+  const user_id = req.user;
+  if (!req.user) {
+    res.statusCode = 403;
+    return res.send({'Error': 'You are not logged in user'})
+  }
+  const items = Item.find().where({user: user_id, year: year, month: month}).exec(function(err, items){
+      if (err) throw err;
+      return res.send({'items': items})
+  }
+  );
+  
+});
+
 router.post('/remove/:id', function(req, res){
     const id = req.params.id;
     const user = req.user;
