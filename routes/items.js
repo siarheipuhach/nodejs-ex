@@ -24,13 +24,12 @@ router.post('/add', (req, res) => {
             month: month
         });
         Item.createItem(newItem, function(err, item){
-            console.log('Errors:')
-            console.log(err)
-            console.log('err')
+          console.log(item)
             return res.send(item)
         });
+    }else{
+      return res.send('Error')
     }
-    return res.send('Error')
   });
 
 
