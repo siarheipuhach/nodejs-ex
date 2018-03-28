@@ -27,7 +27,7 @@ router.post('/add', (req, res) => {
             console.log('Errors:')
             console.log(err)
             console.log('err')
-            return res.send({'Success': 'You have created a new item'})
+            return res.send(item)
         });
     }
     return res.send('Error')
