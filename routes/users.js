@@ -15,8 +15,8 @@ const transformGoogleProfile = (profile) => {
     console.log(profile)
    return {
     id: profile.id,
-    provider: profile.provider,
-    email: profile.email,
+    provider: 'google',
+    email: profile.emails[0].value,
     name: profile.displayName,
     avatar: profile.image.url,
   }
