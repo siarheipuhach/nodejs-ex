@@ -64,9 +64,9 @@ passport.use(new LocalStrategy(
 ));
 
 passport.use(new GoogleStrategy(google,
-    async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
+    async (accessToken, refreshToken, profile, done)
+      => done(null, transformGoogleProfile(profile._json))
   ));
-
 passport.serializeUser(function(user, done){
     console.log('INSIDE SERIALIZER')
     console.log(user)
@@ -84,7 +84,7 @@ passport.deserializeUser(function(user, done){
         console.log('INSIDE 111')
         done(null, user)       
     }else{
-        console.log('INSIDE 111')
+                console.log('INSIDE 111')
 
         User.getUserById(user, function(err, user){
             done(err, user)
@@ -96,13 +96,9 @@ passport.deserializeUser(function(user, done){
 // Set up Google auth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 
-router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/google' }, function(err, user){
-      req.logIn(user, function(err){
-        return res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))
-      })
-  }),
-  function(req, res){res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))});
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/google' }),
+  (req, res) => res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user)));
 
 
 // Login
