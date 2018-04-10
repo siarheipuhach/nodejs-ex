@@ -1,11 +1,21 @@
+import GoogleStrategy from 'passport-google-oauth20';
+// Import Facebook and Google OAuth apps configs
+import { google } from '../config';
+
+
 var express = require('express');
 var router = express.Router();
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
+
 // Register 
 var User = require('../models/user');
 
-
+const transformGoogleProfile = (profile) => ({
+    name: profile.displayName,
+    avatar: profile.image.url,
+  });
+  
 
 router.post('/register', (req, res) => {
     var name = req.body.name;
@@ -47,6 +57,11 @@ passport.use(new LocalStrategy(
 
     }
 ));
+
+passport.use(new GoogleStrategy(google,
+    async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
+  ));
+
 passport.serializeUser(function(user, done){
     done(null, user.id);
 });
@@ -56,6 +71,14 @@ passport.deserializeUser(function(id, done){
         done(err, user)
     });
 });
+
+// Set up Google auth routes
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/google' }),
+  function(req, res){res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))});
+
 
 // Login
 router.post('/login',

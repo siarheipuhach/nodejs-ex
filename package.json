@@ -22,6 +22,7 @@
     "morgan": "^1.7.0",
     "object-assign": "4.1.0",
     "passport": "*",
+    "passport-google-oauth": "^1.0.0",
     "passport-http": "^0.3.0",
     "passport-local": "*"
   },
@@ -30,8 +31,9 @@
     "npm": "*"
   },
   "scripts": {
-    "start": "node server.js",
-    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js"
+    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js",
+    "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js"
+
   },
   "repository": {
     "type": "git",
@@ -42,5 +44,12 @@
   "bugs": {
     "url": "http://github.com/openshift/nodejs-ex/issues"
   },
-  "homepage": "http://github.com/openshift/nodejs-ex"
+  "homepage": "http://github.com/openshift/nodejs-ex",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "nodemon": "^1.17.3"
+  }
 }
