@@ -11,13 +11,16 @@ var passport = require('passport')
 // Register 
 var User = require('../models/user');
 
-const transformGoogleProfile = (profile) => ({
+const transformGoogleProfile = (profile) => {
+    console.log(profile)
+   return {
     id: profile.id,
     provider: profile.provider,
     email: profile.email,
     name: profile.displayName,
     avatar: profile.image.url,
-  });
+  }
+};
   
 
 router.post('/register', (req, res) => {
