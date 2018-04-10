@@ -12,7 +12,6 @@ var passport = require('passport')
 var User = require('../models/user');
 
 const transformGoogleProfile = (profile) => {
-    console.log(profile)
    return {
     id: profile.id,
     provider: 'google',
@@ -69,15 +68,11 @@ passport.use(new GoogleStrategy(google,
   ));
 
 passport.serializeUser(function(user, done){
-    console.log('passport.serializeUser')
-    console.log(user)
     done(null, user)
        
 });
 
 passport.deserializeUser(function(user, done){
-    console.log('passport.deserializeUser')
-    console.log(user)
     if (!user.provider){
         User.getUserById(user.id, function(err, user){
             done(err, user)
@@ -111,10 +106,6 @@ router.get('/logout', function(req, res){
 });
 
 router.get('/isloggedin', function(req, res){
-    console.log('*****************************************************')
-    console.log('Request')
-    console.log(req)
-    console.log('*****************************************************')
     if(!req.user){
         res.statusCode = 403;
         res.send({'Error': 'You are not logged in user'})
