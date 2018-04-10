@@ -97,7 +97,11 @@ passport.deserializeUser(function(user, done){
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 
 router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/google' }),
+  passport.authenticate('google', { failureRedirect: '/auth/google' }, function(err, user){
+      req.logIn(user, function(err){
+        return res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))
+      })
+  }),
   function(req, res){res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))});
 
 
