@@ -73,6 +73,7 @@ passport.serializeUser(function(user, done){
 });
 
 passport.deserializeUser(function(user, done){
+    console.log(user)
     if (!user.provider){
         User.getUserById(user.id, function(err, user){
             done(err, user)
@@ -106,6 +107,9 @@ router.get('/logout', function(req, res){
 });
 
 router.get('/isloggedin', function(req, res){
+    console.log('--------------------------------------------------------------------------')
+    console.log(req)
+    console.log('--------------------------------------------------------------------------')
     if(!req.user){
         res.statusCode = 403;
         res.send({'Error': 'You are not logged in user'})
