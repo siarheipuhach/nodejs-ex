@@ -12,6 +12,8 @@ var passport = require('passport')
 var User = require('../models/user');
 
 const transformGoogleProfile = (profile) => ({
+    id: profile.id,
+    email: profile.email,
     name: profile.displayName,
     avatar: profile.image.url,
   });
