@@ -65,15 +65,22 @@ passport.use(new GoogleStrategy(google,
 passport.serializeUser(function(user, done){
     console.log('passport.serializeUser')
     console.log(user)
-    done(null, user);
+    if(user.id){done(null, user.id);}
+    else{done(null, user)}
+       
 });
 
 passport.deserializeUser(function(id, done){
     console.log('passport.deserializeUser')
     console.log(id)
-    User.getUserById(id, function(err, user){
+    if (typeof id === 'string'){
+        User.getUserById(id, function(err, user){
+            done(err, user)
+        });
+    }else{
         done(err, user)
-    });
+    }
+    
 });
 
 // Set up Google auth routes
