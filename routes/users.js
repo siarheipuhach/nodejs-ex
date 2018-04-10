@@ -98,7 +98,7 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
-  function(req, res){res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))});
+  function(req, res){res.redirect('app://login?user=' + JSON.stringify(req.user))});
 
 
 // Login
