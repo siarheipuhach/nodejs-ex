@@ -96,7 +96,7 @@ passport.deserializeUser(function(user, done){
 // Set up Google auth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 
-app.get('/auth/google/callback',
+router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
   (req, res) => res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user)));
 
