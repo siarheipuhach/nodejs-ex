@@ -66,9 +66,30 @@ passport.use(new LocalStrategy(
 
 passport.use(new GoogleStrategy(google,
   function(token, tokenSecret, profile, done) {
-      User.findOrCreate(profile.id, function (err, user) {
-        return done(err, user);
-      });
+
+        User.findOne({
+            email: profile.emails[0].value 
+        }, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            //No user was found... so create a new user with values from Facebook (all the profile. stuff)
+            if (!user) {
+                user = new User({
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                    password: 'sdflksdmfkljsdnf',
+                });
+                user.save(function(err) {
+                    if (err) console.log(err);
+                    return done(err, user);
+                });
+            } else {
+                //found user. Return
+                return done(err, user);
+            }
+        });
+
   }
 ));
 
