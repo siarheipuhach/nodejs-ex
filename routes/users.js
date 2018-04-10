@@ -12,26 +12,13 @@ var passport = require('passport')
 var User = require('../models/user');
 
 const transformGoogleProfile = (profile) => {
-    const user = {
-        id: profile.id,
-        provider: 'google',
-        email: profile.emails[0].value,
-        name: profile.displayName,
-        avatar: profile.image.url,
-        password: 'lsdkjnfkjhasdnfkhsdfkjhewr'
-      }
-
-      
-    User.findOrCreate(user, function (err, user) {
-        return {
-            id: profile.id,
-            provider: 'google',
-            email: profile.emails[0].value,
-            name: profile.displayName,
-            avatar: profile.image.url,
-          }
-      });
-   
+   return {
+    id: profile.id,
+    provider: 'google',
+    email: profile.emails[0].value,
+    name: profile.displayName,
+    avatar: profile.image.url,
+  }
 };
   
 
@@ -76,10 +63,14 @@ passport.use(new LocalStrategy(
     }
 ));
 
+
 passport.use(new GoogleStrategy(google,
-    async (accessToken, refreshToken, profile, done)
-      => done(null, transformGoogleProfile(profile._json))
-  ));
+  function(token, tokenSecret, profile, done) {
+      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return done(err, user);
+      });
+  }
+));
 
 passport.serializeUser(function(user, done){
     console.log('INSIDE SERIALIZER')
