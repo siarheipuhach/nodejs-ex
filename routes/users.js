@@ -66,7 +66,7 @@ passport.use(new LocalStrategy(
 
 passport.use(new GoogleStrategy(google,
   function(token, tokenSecret, profile, done) {
-      User.findOrCreate({ id: profile.id,  email: profile.emails[0].value, name: profile.displayName, }, function (err, user) {
+      User.findOrCreate({ _id: profile.id }, function (err, user) {
         return done(err, user);
       });
   }
