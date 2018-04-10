@@ -62,14 +62,14 @@ passport.use(new GoogleStrategy(google,
     async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
   ));
 
-passport.serializeUser(function(user, done){
+passport.serializeUser(function(user, done){\
     done(null, user);
 });
 
 passport.deserializeUser(function(id, done){
     User.getUserById(id, function(err, user){
         done(err, user)
-    });
+    }).catch(done(err, user));
 });
 
 // Set up Google auth routes
