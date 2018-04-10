@@ -84,7 +84,7 @@ passport.deserializeUser(function(user, done){
         console.log('INSIDE 111')
         done(null, user)       
     }else{
-        console.log('INSIDE 222')
+        console.log('INSIDE 111')
 
         User.getUserById(user, function(err, user){
             done(err, user)
@@ -98,7 +98,7 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
-  function(req, res){res.redirect('financer://login?user=' + JSON.stringify(req.user))});
+  function(req, res){res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))});
 
 
 // Login
