@@ -63,19 +63,29 @@ passport.use(new LocalStrategy(
     }
 ));
 
+// passport.use(new GoogleStrategy(google,
+//     async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
+//   ));
+
 passport.use(new GoogleStrategy(google,
-    async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
-  ));
+  function(token, tokenSecret, profile, done) {
+      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return done(err, user);
+      });
+  }
+));
 
 passport.serializeUser(function(user, done){
-    done(null, user)
-       
+    if (user.provider){
+        done(null, user)       
+    }else{
+        done(null, user.id)
+    }
 });
 
 passport.deserializeUser(function(user, done){
-    console.log(user)
     if (!user.provider){
-        User.getUserById(user.id, function(err, user){
+        User.getUserById(user, function(err, user){
             done(err, user)
         });
     }else{
