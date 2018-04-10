@@ -63,17 +63,9 @@ passport.use(new LocalStrategy(
     }
 ));
 
-// passport.use(new GoogleStrategy(google,
-//     async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
-//   ));
-
 passport.use(new GoogleStrategy(google,
-  function(token, tokenSecret, profile, done) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return done(err, user);
-      });
-  }
-));
+    async function(accessToken, refreshToken, profile, done){done(null, transformGoogleProfile(profile._json))}
+  ));
 
 passport.serializeUser(function(user, done){
     console.log(user)
