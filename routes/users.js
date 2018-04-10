@@ -76,6 +76,7 @@ passport.use(new GoogleStrategy(google,
 ));
 
 passport.serializeUser(function(user, done){
+    console.log(user)
     if (user.provider){
         done(null, user)       
     }else{
@@ -84,6 +85,7 @@ passport.serializeUser(function(user, done){
 });
 
 passport.deserializeUser(function(user, done){
+    console.log(user)
     if (!user.provider){
         User.getUserById(user, function(err, user){
             done(err, user)
