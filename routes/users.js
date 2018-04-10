@@ -13,6 +13,7 @@ var User = require('../models/user');
 
 const transformGoogleProfile = (profile) => ({
     id: profile.id,
+    provider: profile.provider,
     email: profile.email,
     name: profile.displayName,
     avatar: profile.image.url,
@@ -67,26 +68,25 @@ passport.use(new GoogleStrategy(google,
 passport.serializeUser(function(user, done){
     console.log('passport.serializeUser')
     console.log(user)
-    if(user.id){done(null, user.id);}
-    else{done(null, user)}
+    done(null, user)
        
 });
 
-passport.deserializeUser(function(id, done){
+passport.deserializeUser(function(user, done){
     console.log('passport.deserializeUser')
-    console.log(id)
-    if (typeof id === 'string'){
-        User.getUserById(id, function(err, user){
+    console.log(user)
+    if (!user.provider){
+        User.getUserById(user.id, function(err, user){
             done(err, user)
         });
     }else{
-        done(null, id)
+        done(null, user)
     }
     
 });
 
 // Set up Google auth routes
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
