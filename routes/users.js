@@ -103,20 +103,10 @@ passport.serializeUser(function(user, done){
     }
 });
 
-passport.deserializeUser(function(user, done){
-    console.log('INSIDE DESERIALIZER')
-    console.log(user)
-    if (user.provider){
-        console.log('INSIDE 111')
-        done(null, user)       
-    }else{
-                console.log('INSIDE 111')
-
-        User.getUserById(user, function(err, user){
-            done(err, user)
-        });
-    }
-    
+passport.deserializeUser(function(user, done){    
+    User.getUserById(user, function(err, user){
+        done(err, user)
+    });
 });
 
 // Set up Google auth routes
