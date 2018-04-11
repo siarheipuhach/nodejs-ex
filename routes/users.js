@@ -115,7 +115,7 @@ passport.use(new GoogleStrategy(google,
             }
             //No user was found... so create a new user with values from Facebook (all the profile. stuff)
             if (!user) {
-                user = new User({
+                const newUser = new User({
                     googleId: profile.id,
                     name: profile.displayName,
                     email: profile.emails[0].value,
