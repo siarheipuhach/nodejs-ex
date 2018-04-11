@@ -84,8 +84,7 @@ passport.use(new FacebookStrategy(facebook,
             //No user was found... so create a new user with values from Facebook (all the profile. stuff)
             if (!user) {
                 console.log('profile FACEBOOK')
-                console.log(profile)
-                newUser = new User({
+                const newUser = new User({
                     facebookId: profile.id,
                     name: profile.displayName,
                     email: profile.email,
