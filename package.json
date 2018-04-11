@@ -10,8 +10,9 @@
     "chai-http": "^2.0.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.4.1",
-    "express": "^4.13.4",
+    "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
@@ -21,8 +22,10 @@
     "mongoose": "^5.0.10",
     "morgan": "^1.7.0",
     "object-assign": "4.1.0",
-    "passport": "*",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth20": "^1.0.0",
     "passport-http": "^0.3.0",
     "passport-local": "*"
   },
@@ -33,7 +36,6 @@
   "scripts": {
     "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js",
     "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js"
-
   },
   "repository": {
     "type": "git",

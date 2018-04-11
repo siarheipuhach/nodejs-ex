@@ -1,6 +1,8 @@
 import GoogleStrategy from 'passport-google-oauth20';
 // Import Facebook and Google OAuth apps configs
-import { google } from '../config';
+import FacebookStrategy from 'passport-facebook';
+
+import { google, facebook } from '../config';
 
 
 var express = require('express');
@@ -63,6 +65,13 @@ passport.use(new LocalStrategy(
     }
 ));
 
+passport.use(new FacebookStrategy(facebook,
+    // Gets called when user authorizes access to their profile
+    async (accessToken, refreshToken, profile, done)
+      // Return done callback and pass transformed user object
+      => done(null, transformFacebookProfile(profile._json))
+  ));  
+
 
 passport.use(new GoogleStrategy(google,
   function(token, tokenSecret, profile, done) {
@@ -103,11 +112,22 @@ passport.serializeUser(function(user, done){
     }
 });
 
-passport.deserializeUser(function(user, done){    
-    User.getUserById(user, function(err, user){
+passport.deserializeUser(function(id, done){   
+    console.log('INSIDE DESERIALIZER') 
+    console.log(id)
+    User.getUserById(id, function(err, user){
         done(err, user)
     });
 });
+
+// Set up Facebook auth routes
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/auth/facebook' }),
+  // Redirect user back to the mobile app using Linking with a custom protocol OAuthLogin
+  (req, res) => res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user)));
+
 
 // Set up Google auth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
