@@ -137,11 +137,7 @@ passport.use(new GoogleStrategy(google,
 passport.serializeUser(function(user, done){
     console.log('INSIDE SERIALIZER')
     console.log(user)
-    if (user.provider){
-        done(null, user)       
-    }else{
-        done(null, user.id)
-    }
+    done(null, user.id)
 });
 
 passport.deserializeUser(function(id, done){   
