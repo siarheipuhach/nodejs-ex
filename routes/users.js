@@ -88,7 +88,7 @@ passport.use(new FacebookStrategy(facebook,
                     facebookId: profile.id,
                     name: profile.displayName,
                     email: profile.email,
-                    password: 'sdflksdmfkljsdnf',
+                    password: profile.id,
                 });
                 User.createUser(newUser, function(err, user){
                     if(err) throw err;
@@ -119,10 +119,10 @@ passport.use(new GoogleStrategy(google,
                     googleId: profile.id,
                     name: profile.displayName,
                     email: profile.emails[0].value,
-                    password: 'sdflksdmfkljsdnf',
+                    password: profile.id,
                 });
-                user.save(function(err) {
-                    if (err) console.log(err);
+                User.createUser(newUser, function(err, user){
+                    if(err) throw err;
                     return done(err, user);
                 });
             } else {
