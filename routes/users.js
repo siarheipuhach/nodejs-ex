@@ -121,9 +121,9 @@ passport.deserializeUser(function(id, done){
 });
 
 // Set up Facebook auth routes
-app.get('/auth/facebook', passport.authenticate('facebook'));
+router.get('/auth/facebook', passport.authenticate('facebook'));
 
-app.get('/auth/facebook/callback',
+router.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/auth/facebook' }),
   // Redirect user back to the mobile app using Linking with a custom protocol OAuthLogin
   (req, res) => res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user)));
