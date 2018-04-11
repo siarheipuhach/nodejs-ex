@@ -21,7 +21,13 @@ var UserSchema = mongoose.Schema({
     },
     name: {
         type: String
-    }
+    },
+    googleId: { 
+        type: String, default: null 
+    },
+    facebookId: { 
+        type: String, default: null 
+    }     
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

@@ -74,18 +74,41 @@ passport.use(new LocalStrategy(
 ));
 
 passport.use(new FacebookStrategy(facebook,
-    // Gets called when user authorizes access to their profile
-    async (accessToken, refreshToken, profile, done)
-      // Return done callback and pass transformed user object
-      => done(null, transformFacebookProfile(profile._json))
+    function(token, tokenSecret, profile, done) {
+        User.findOne({
+            facebookId: profile.id 
+        }, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            //No user was found... so create a new user with values from Facebook (all the profile. stuff)
+            if (!user) {
+                console.log('profile FACEBOOK')
+                console.log(profile)
+                user = new User({
+                    facebookId: profile.id,
+                    name: profile.displayName,
+                    email: profile.email,
+                    password: 'sdflksdmfkljsdnf',
+                });
+                user.save(function(err) {
+                    if (err) console.log(err);
+                    return done(err, user);
+                });
+            } else {
+                //found user. Return
+                return done(err, user);
+            }
+        });
+
+  }
   ));  
 
 
 passport.use(new GoogleStrategy(google,
   function(token, tokenSecret, profile, done) {
-
         User.findOne({
-            email: profile.emails[0].value 
+            googleId: profile.id 
         }, function(err, user) {
             if (err) {
                 return done(err);
@@ -93,6 +116,7 @@ passport.use(new GoogleStrategy(google,
             //No user was found... so create a new user with values from Facebook (all the profile. stuff)
             if (!user) {
                 user = new User({
+                    googleId: profile.id,
                     name: profile.displayName,
                     email: profile.emails[0].value,
                     password: 'sdflksdmfkljsdnf',
