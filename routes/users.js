@@ -22,6 +22,14 @@ const transformGoogleProfile = (profile) => {
     avatar: profile.image.url,
   }
 };
+
+const transformFacebookProfile = (profile) => ({
+    email: profile.email,
+    id: profile.id,
+    provider: 'facebook',
+    name: profile.name,
+    avatar: profile.picture.data.url,
+  });
   
 
 router.post('/register', (req, res) => {
@@ -152,6 +160,9 @@ router.get('/logout', function(req, res){
 });
 
 router.get('/isloggedin', function(req, res){
+    console.log(req.user)
+    console.log('req.isAuthenticated()')
+    console.log(req.isAuthenticated())
     if(!req.user){
         res.statusCode = 403;
         res.send({'Error': 'You are not logged in user'})
