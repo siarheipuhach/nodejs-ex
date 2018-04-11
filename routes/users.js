@@ -85,16 +85,17 @@ passport.use(new FacebookStrategy(facebook,
             if (!user) {
                 console.log('profile FACEBOOK')
                 console.log(profile)
-                user = new User({
+                newUser = new User({
                     facebookId: profile.id,
                     name: profile.displayName,
                     email: profile.email,
                     password: 'sdflksdmfkljsdnf',
                 });
-                user.save(function(err) {
-                    if (err) console.log(err);
+                User.createUser(newUser, function(err, user){
+                    if(err) throw err;
                     return done(err, user);
                 });
+                
             } else {
                 //found user. Return
                 return done(err, user);
