@@ -154,8 +154,12 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/auth/facebook' }),
   // Redirect user back to the mobile app using Linking with a custom protocol OAuthLogin
-  (req, res) => res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user)));
-
+  (req, res) => 
+  {console.log('req.user from router.get')
+    console.log(req.user)
+      return res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))
+    }
+)
 
 // Set up Google auth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
