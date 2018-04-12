@@ -26,6 +26,9 @@ var ItemSchema = mongoose.Schema({
     year: {
         type: Number
     },
+    isActive: {
+        type: Boolean, default: true 
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }

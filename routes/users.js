@@ -135,14 +135,11 @@ passport.use(new GoogleStrategy(google,
 ));
 
 passport.serializeUser(function(user, done){
-    console.log('INSIDE SERIALIZER')
     console.log(user)
     done(null, user.id)
 });
 
 passport.deserializeUser(function(id, done){   
-    console.log('INSIDE DESERIALIZER') 
-    console.log(id)
     User.getUserById(id, function(err, user){
         done(err, user)
     });
