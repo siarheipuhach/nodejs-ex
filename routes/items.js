@@ -78,6 +78,7 @@ router.put('/:id', (req, res) => {
       var value = req.body.value;
       var type = req.body.type;
       var name = req.body.name;
+      var isActive = req.body.isActive;
       if(value !== undefined) {
         foundObject.value = value
       }
@@ -86,6 +87,9 @@ router.put('/:id', (req, res) => {
       }
       if(name !== undefined) {
         foundObject.name = name
+      }
+      if(isActive !== undefined) {
+        foundObject.isActive = isActive
       }
       foundObject.save((e, updatedTodo) => {
         if(err) {
