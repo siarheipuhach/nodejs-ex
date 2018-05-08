@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var multer  = require('multer')
 // Register 
 var Item = require('../models/item');
 
-
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb){
+    cb(null, new Date().toISOString()+file.originalname);
+  }
+});
+const upload = multer({storage: storage})
 
 router.post('/add', (req, res) => {
     var value = req.body.value;
@@ -100,5 +109,12 @@ router.put('/:id', (req, res) => {
       })
     })
   })
+
+router.post('/upload_scan', upload.single('image'), (req, res) => {  
+  console.log(req.file)
+    return res.send('OK')
+});
+
+
 
 module.exports = router;
