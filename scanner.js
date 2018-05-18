@@ -26,6 +26,10 @@ const scanImage = (filename = 'bill3.jpg') => Tesseract.recognize(filename, {lan
 						priceValue = thenum[0];
 				}
 				})
+				console.log({
+					price: priceValue,
+					tags: output
+				}		)
 				return {
 					price: priceValue,
 					tags: output

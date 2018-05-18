@@ -113,6 +113,7 @@ router.put('/:id', (req, res) => {
 
 router.post('/upload_scan', upload.single('image'), (req, res) => {  
   console.log(req.file)
+  if(err){console.log(err)}
     return res.send('OK')
 });
 
